@@ -1,9 +1,6 @@
 {
     "name": "devscribe",
     "favicon": "/favicon.svg",
-    "logo": "/devscribe_logo_w_svg.svg",
-    "logoLight": "/devscribe_logo_b_svg.svg",
-    "logoDark": "/devscribe_logo_w_svg.svg",
     "navigation": {
       "tabs": [
         {
@@ -18,76 +15,10 @@
             {
               "group": "Quickstart",
               "pages": [
-              "guickstart/test"
-                "quickstart/guide",
-                "quickstart/docs-json",
-                {
-                  "dropdown": "Dropdown Example",
-                  "pages": [
-                    "quickstart/dropdown-doc-a",
-                    "quickstart/dropdown-doc-b"
-                  ]
-                },
-                "quickstart/openapi-json",
-                "quickstart/onboarding"
+                "quickstart/User Guide",
+                "quickstart/Docs.json Setup",
+                "quickstart/Openapi-json Setup"
               ]
             }
           ]
         },
-        {
-          "tab": "API Reference",
-          "groups": [
-            {
-              "group": "API Documentation",
-              "pages": [
-                "api-reference/introduction"
-              ]
-            },
-            {
-              "group": "Endpoints",
-              "pages": [
-                "api-reference/endpoint/get",
-                "api-reference/endpoint/post",
-                "api-reference/endpoint/delete",
-                "api-reference/endpoint/put",
-                "api-reference/endpoint/patch"
-              ]
-            }
-          ]
-        },
-        {
-          "tab": "Resources",
-          "groups": [
-            {
-              "group": "Examples",
-              "pages": [
-                "resources/examples"
-              ]
-            }
-          ]
-        },
-        {
-          "tab": "Changelog",
-          "external": true,
-          "url": "/changelog"
-        }
-      ],
-
-      "global": {
-        "anchors": []
-      },
-
-      "buttons": [
-        {
-          "label": "Button 1",
-          "href": "/",
-          "variant": "ghost"
-        },
-        {
-          "label": "Button 2",
-          "href": "/",
-          "variant": "primary"
-        }
-      ]
-    }
-  }

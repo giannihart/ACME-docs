@@ -57,6 +57,7 @@ Each update card displays:
 - **Category**: Derived from the title (text before the first dot)
 - **Last Updated**: Timestamp of when the change was detected
 - **Status Badge**: Visual indicator of change type
+- **Delete Button**: A trash icon button that allows you to remove individual updates from your pending list
 
 ## Taking Action on Updates
 
@@ -89,6 +90,18 @@ For **new** items:
 1. Click the "Generate" button on the update card
 2. The system calls the `/generate-docs` endpoint with the unique identifier (UID) of the new code
 3. A diff view shows the newly generated documentation compared to an empty baseline
+
+### Deleting Updates
+
+You can remove updates from your pending list if you don't want to process them:
+
+1. Click the delete button (trash icon) on any update card
+2. The update will be immediately removed from your pending updates list
+3. This gives you control over which changes you want to process and which you want to dismiss
+
+<Callout type="info">
+Deleting an update removes it from your pending list but does not affect your codebase or existing documentation. This action simply dismisses the update notification.
+</Callout>
 
 ## Workflow Example
 
