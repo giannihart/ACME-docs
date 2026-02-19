@@ -18,6 +18,7 @@
             {
               "group": "Quickstart",
               "pages": [
+              "guickstart/test"
                 "quickstart/guide",
                 "quickstart/docs-json",
                 {
