@@ -1,0 +1,872 @@
+---
+title: Developer Guide
+icon: book
+---
+# Devscribe Frontend - Internal Developer Guide
+
+## Table of Contents
+- [Overview](#overview)
+- [Technology Stack](#technology-stack)
+- [Getting Started](#getting-started)
+- [Project Architecture](#project-architecture)
+- [Key Features](#key-features)
+- [Development Workflow](#development-workflow)
+- [Testing and Quality](#testing-and-quality)
+- [Deployment](#deployment)
+- [Troubleshooting](#troubleshooting)
+
+---
+
+## Overview
+
+**Devscribe Frontend** is a Next.js-based documentation generation and editing platform that enables teams to create, manage, and deploy technical documentation. The platform integrates with GitHub for repository access, uses Supabase for backend services, and supports deployment to Vercel.
+
+### Core Capabilities
+- AI-powered documentation generation from code repositories
+- Rich text editing with MDX and Tiptap editors
+- Real-time collaboration and team management
+- Analytics and deployment tracking
+- Custom theming and branding
+- Multi-organization support
+
+---
+
+## Technology Stack
+
+### Core Framework
+- **Next.js 15.3.8** - React framework with App Router
+- **React 19** - UI library
+- **TypeScript 5** - Type safety
+
+### UI & Styling
+- **Tailwind CSS 4** - Utility-first CSS framework
+- **Radix UI** - Accessible component primitives
+- **Framer Motion** - Animation library
+- **Lucide React** - Icon library
+- **Shadcn/ui** - Component library built on Radix
+
+### Editors
+- **Tiptap 3.13** - Rich text editor framework
+- **CodeMirror 6** - Code editor with syntax highlighting
+- **ProseMirror** - Document editing library
+- **Shiki 3.7** - Syntax highlighting
+
+### Content Management
+- **MDX** - Markdown with JSX
+- **Markdoc** - Markdown-based authoring framework
+- **Content Collections** - Type-safe content management
+- **Rehype/Remark** - Markdown processing
+
+### Backend & Database
+- **Supabase** - PostgreSQL database and authentication
+- **Google Cloud Storage** - File storage
+- **Server Actions** - Next.js server-side operations
+
+### Forms & Validation
+- **React Hook Form** - Form state management
+- **Zod** - Schema validation
+
+### Development Tools
+- **Biome** - Fast formatter and linter
+- **ESLint** - Code linting
+- **Prettier** - Code formatting
+
+---
+
+## Getting Started
+
+### Prerequisites
+- **Node.js 20+** (recommended: Node 24)
+- **npm** or **pnpm**
+- **Git**
+- **Supabase account** (for database)
+- **Vercel account** (optional, for deployment)
+
+### Environment Variables
+
+<Callout type="warning">
+Create a `.env.local` file in the root directory with the following variables. **Note:** Use `127.0.0.1` exactly as shown for the backend URL, not "localhost".
+</Callout>
+
+<CodeSnippet language="bash" title=".env.local">
+{`# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+
+# Backend API
+NEXT_PUBLIC_DEVSCRIBE_BACKEND_URL=http://127.0.0.1:8000
+
+# Note: Use 127.0.0.1 exactly as shown, not "localhost"`}
+</CodeSnippet>
+
+### Installation
+
+<CodeGroup>
+  <CodeSnippet language="bash" title="Clone Repository">
+    {`git clone <repository-url>
+cd devscribe-frontend`}
+  </CodeSnippet>
+  
+  <CodeSnippet language="bash" title="Install Dependencies">
+    npm ci
+  </CodeSnippet>
+  
+  <CodeSnippet language="bash" title="Run Development Server">
+    npm run dev
+  </CodeSnippet>
+</CodeGroup>
+
+<Callout type="success">
+The application will be available at `http://localhost:3000`
+</Callout>
+
+### Available Scripts
+
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Start development server |
+| `npm run dev:turbo` | Start development server with Turbopack |
+| `npm run dev:clean` | Clean .next directory and start dev server |
+| `npm run build` | Build production bundle |
+| `npm start` | Start production server |
+| `npm run lint` | Run ESLint |
+| `npm run lint:fix` | Fix ESLint issues |
+| `npm run type` | Run TypeScript type checking |
+| `npm run typecheck` | Alias for type checking |
+| `npm run format` | Format code with Biome |
+| `npm run format:fix` | Format code with Prettier |
+| `npm run analyze` | Analyze bundle size |
+| `npm run clean` | Clean all build artifacts |
+| `npm run ci:check` | Run full CI checks (build + type + lint) |
+
+---
+
+## Project Architecture
+
+### Directory Structure
+
+<CodeSnippet language="text" showLineNumbers={true}>
+{`devscribe-frontend/
+├── src/
+│   ├── app/                    # Next.js App Router
+│   │   ├── (landing)/         # Public landing pages
+│   │   ├── (auth)/            # Authentication pages
+│   │   ├── (dashboard)/       # Protected dashboard routes
+│   │   ├── api/               # API routes
+│   │   ├── layout.tsx         # Root layout
+│   │   └── styles/            # Global styles
+│   │
+│   ├── features/              # Feature-based modules
+│   │   ├── auth/             # Authentication logic
+│   │   ├── database/         # Supabase database utilities
+│   │   ├── editing/          # File editing features
+│   │   ├── editor/           # Editor components
+│   │   ├── generation/       # Doc generation features
+│   │   ├── generation-new/   # New generation flow
+│   │   ├── landing/          # Landing page content
+│   │   ├── mdx/              # MDX processing
+│   │   └── updates-old/      # Legacy updates
+│   │
+│   ├── components/           # Shared components
+│   │   ├── ui/              # UI primitives (Shadcn)
+│   │   ├── layout/          # Layout components
+│   │   ├── dashboard/       # Dashboard components
+│   │   ├── block-editor/    # Block editor
+│   │   ├── tiptap-*/        # Tiptap editor components
+│   │   ├── tree/            # File tree components
+│   │   ├── mdx/             # MDX components
+│   │   └── blocks/          # Content blocks
+│   │
+│   ├── hooks/               # Custom React hooks
+│   ├── lib/                 # Utility libraries
+│   │   ├── supabase.ts      # Supabase client
+│   │   ├── supabase-app.ts  # App-specific Supabase utils
+│   │   ├── utils.ts         # General utilities
+│   │   ├── tiptap-utils.ts  # Tiptap helpers
+│   │   └── mdx-tiptap-parser.ts # MDX/Tiptap conversion
+│   │
+│   └── styles/              # Additional styles
+│
+├── public/                  # Static assets
+├── tests/                   # Test files
+├── starter/                 # Starter templates
+│   └── docs/               # Sample documentation
+├── supabase/               # Supabase configuration
+├── .cursor/                # Cursor IDE commands
+├── .github/                # GitHub workflows
+│   └── workflows/
+│       └── lint.yml        # CI/CD pipeline
+├── next.config.ts          # Next.js configuration
+├── tsconfig.json           # TypeScript configuration
+├── tailwind.config.js      # Tailwind configuration
+├── biome.json              # Biome configuration
+├── components.json         # Shadcn UI configuration
+├── Dockerfile              # Docker configuration
+├── docker-compose.yml      # Docker Compose setup
+└── package.json            # Dependencies`}
+</CodeSnippet>
+
+### Routing Structure
+
+The application uses Next.js 15 App Router with grouped routes:
+
+#### Public Routes (Landing)
+- `/` - Home page
+- `/features` - Feature showcase
+- `/pricing` - Pricing page
+- `/docs/[...slug]` - Documentation
+- `/blog` - Blog listing
+- `/blog/[...slug]` - Blog posts
+- `/enterprise` - Enterprise page
+- `/contact` - Contact page
+- `/terms-of-use` - Terms of use
+- `/privacy-policy` - Privacy policy
+
+#### Auth Routes
+- `/login` - User login
+- `/signup` - User registration
+
+#### Dashboard Routes (Protected)
+- `/dashboard` - Main dashboard with deployment history
+- `/generate-docs` - Documentation generation wizard
+- `/editor` - Document editor with file tree
+- `/updates` - Updates/changelog
+- `/analytics` - Analytics dashboard
+- `/settings` - Settings hub with subpages:
+  - `/settings/general` - General settings
+  - `/settings/personal` - Personal settings
+  - `/settings/teammates` - Team management
+  - `/settings/orgs` - Organization management
+  - `/settings/github` - GitHub integration
+  - `/settings/themes` - Theme customization
+  - `/settings/logos` - Logo/branding upload
+  - `/settings/domain` - Custom domain
+  - `/settings/analytics` - Analytics settings
+  - `/settings/billing` - Billing information
+  - `/settings/security` - Security settings
+  - `/settings/setup` - Initial setup
+  - `/settings/openapiimport` - OpenAPI import
+  - `/settings/mcp-server` - MCP server settings
+
+---
+
+## Key Features
+
+### 1. Documentation Generation
+
+**Location:** `src/app/(dashboard)/generate-docs/`
+
+The documentation generation feature is a multi-step wizard that guides users through:
+
+**Step 1: Select Documentation Type**
+- API Reference documentation
+- Internal documentation
+- External documentation
+
+**Step 2: Select Repository**
+- GitHub repository selection
+- OAuth integration with GitHub
+- Repository access management
+
+**Step 3: Generate Documentation**
+- AI-powered code analysis
+- Automatic documentation creation
+- File structure generation
+
+**Key Types:** `src/features/generation/types/index.ts`
+
+<CodeSnippet language="typescript">
+{`interface GitHubRepo {
+  id: number;
+  name: string;
+  owner: { login: string };
+}
+
+interface FileMetadata {
+  uid: string;
+  status: "generated" | "modified" | "deployed";
+  createdAt: string;
+  lastModified: string;
+  lastDeployed?: string;
+}`}
+</CodeSnippet>
+
+### 2. Document Editor
+
+**Location:** `src/app/(dashboard)/editor/`
+
+A sophisticated editing environment featuring:
+
+**Components:**
+- **Sidebar** - File tree navigation with drag-and-drop
+- **Editor** - Dual-mode editor (Preview/MDX)
+- **Tiptap Rich Text Editor** - WYSIWYG editing
+- **CodeMirror MDX Editor** - Raw markdown editing
+
+**File Tree Features:**
+- Create, rename, delete files and folders
+- Drag-and-drop file organization
+- File status indicators (generated, modified, deployed)
+- Real-time file syncing with Google Cloud Storage
+
+**Editor Features:**
+- Rich text formatting with Tiptap
+- Code syntax highlighting
+- Image upload and management
+- Real-time save indicators
+- Undo/redo functionality
+- AI-assisted editing
+
+**Key Types:** `src/features/editing/types.ts`
+
+<CodeSnippet language="typescript">
+{`interface TreeNode {
+  id: string;
+  name: string;
+  type: 'file' | 'folder';
+  path: string;
+}
+
+interface EditorState {
+  currentFile: string | null;
+  content: string;
+  isDirty: boolean;
+  isSaving: boolean;
+  isDeploying: boolean;
+  lastSaved: Date | null;
+}`}
+</CodeSnippet>
+
+### 3. Dashboard & Deployment Tracking
+
+**Location:** `src/components/dashboard/dashboard.tsx`
+
+The dashboard provides:
+- **Vercel Deployment History** - Real-time deployment status
+- **Deployment Metrics** - Build times, status tracking
+- **Recent Activity** - Latest documentation changes
+- **Quick Actions** - Generate, edit, deploy shortcuts
+
+**Features:**
+- Live deployment status (Building, Ready, Failed)
+- Commit information with GitHub links
+- Branch and author details
+- Time-based filtering
+- Search functionality
+
+### 4. Team & Organization Management
+
+**Location:** `src/app/(dashboard)/settings/teammates/`
+
+Multi-tenant architecture supporting:
+- **Organizations** - Top-level entity
+- **Platforms** - Documentation projects per org
+- **Teams** - Members with roles (Owner, Editor, Viewer)
+- **Invitations** - Email-based team invites
+
+**Key Types:** `src/features/database/types.ts`
+
+<CodeSnippet language="typescript">
+{`interface Organization {
+  id: string;
+  name: string;
+  owner_id: string;
+  gh_installation_id: string | null;
+}
+
+interface Platform {
+  id: string;
+  name: string;
+  source_repos: string[] | null;
+  vercel_project_id: string | null;
+  members: PlatformMember[];
+}
+
+interface PlatformMember {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+}`}
+</CodeSnippet>
+
+### 5. Analytics
+
+**Location:** `src/app/(dashboard)/analytics/`
+
+Track documentation usage with:
+- **Page Views** - Daily and per-page metrics
+- **Visitor Analytics** - Unique visitor tracking (hashed)
+- **Feedback** - Thumbs up/down ratings per page
+- **Referrer Tracking** - Traffic source analysis
+
+**Key Types:** `src/features/database/types.ts`
+
+<CodeSnippet language="typescript">
+{`interface PageView {
+  platform_id: string;
+  page_path: string;
+  visitor_hash: string;
+  view_date: string;
+  timestamp: string;
+}
+
+interface AnalyticsResponse {
+  dailyMetrics: DailyAnalytics[];
+  pageAnalytics: PageAnalytics[];
+  summary: AnalyticsSummary;
+}`}
+</CodeSnippet>
+
+### 6. Theme & Branding Customization
+
+**Location:** `src/app/(dashboard)/settings/themes/`
+
+Customize documentation appearance:
+- **Logo Upload** - Light/dark mode logos
+- **Favicon** - Custom favicon
+- **Theme Preview** - Live preview of changes
+- **Color Schemes** - Pre-built themes
+
+**Features:**
+- Base64 image encoding
+- GCS storage integration
+- Real-time preview
+- Theme export/import
+
+### 7. GitHub Integration
+
+**Location:** `src/app/(dashboard)/settings/github/`
+
+OAuth-based GitHub integration:
+- Repository access
+- Commit tracking
+- Branch management
+- Installation management
+
+### 8. Authentication
+
+**Location:** `src/features/auth/`
+
+Powered by Supabase Auth with:
+- Email/password authentication
+- OAuth providers (Google, GitHub)
+- Session management
+- Protected routes with middleware
+
+---
+
+## Development Workflow
+
+### Git Workflow
+
+**Main Branches:**
+- `staging` - Primary development branch (default)
+- `main` - Production branch
+- `mcp-prototyping` - Current feature branch
+
+**Branch Strategy:**
+1. Create feature branch from `staging`
+2. Make changes and commit
+3. Push and create PR to `staging`
+4. After review, merge to `staging`
+5. When ready for production, merge `staging` to `main`
+
+### Code Quality Standards
+
+<Callout type="info">
+The project follows strict quality guidelines (see `CLAUDE.md`)
+</Callout>
+
+1. **Simplicity First**
+   - Solve problems as simply as possible
+   - Avoid over-engineering
+   - Delete unused code completely (no comments or renames)
+
+2. **Code Organization**
+   - Break code into logical files and components
+   - Feature-based directory structure
+   - Keep components modular and reusable
+
+3. **Type Safety**
+   - Define clear TypeScript types
+   - Use JSON/dictionary structures for data
+   - Avoid `any` types
+
+4. **UI/UX Principles**
+   - Keep UIs minimal and uncluttered
+   - Show only necessary information
+   - Prioritize clarity over completeness
+
+5. **Documentation**
+   - Comment complex logic
+   - Use section headers
+   - Keep code self-documenting
+
+6. **Security**
+   - Prevent XSS, SQL injection, command injection
+   - Follow OWASP best practices
+   - Validate all user inputs
+
+### CI/CD Pipeline
+
+**GitHub Actions:** `.github/workflows/lint.yml`
+
+Runs on PRs and pushes to `main` and `staging`:
+
+<CodeSnippet language="yaml">
+{`1. Checkout code
+2. Setup Node.js 20
+3. Install dependencies (npm ci)
+4. Run ESLint
+5. Run build
+6. Run TypeScript type check`}
+</CodeSnippet>
+
+<Callout type="tip">
+**Required EnvironmentVariables for CI:**
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+</Callout>
+
+### Local Development Best Practices
+
+<Callout type="tip">
+**Before Starting Work:**
+</Callout>
+
+<CodeSnippet language="bash">
+{`git pull origin staging
+npm ci  # Install exact dependency versions
+npm run dev`}
+</CodeSnippet>
+
+**During Development:**
+
+<CodeSnippet language="bash">
+{`# Run type checking frequently
+npm run typecheck
+
+# Fix linting issues
+npm run lint:fix
+
+# Format code
+npm run format`}
+</CodeSnippet>
+
+**Before Committing:**
+
+<CodeSnippet language="bash">
+{`# Full CI check locally
+npm run ci:check`}
+</CodeSnippet>
+
+**Path Aliases:**
+
+<Callout type="success">
+Use TypeScript path aliases for clean imports
+</Callout>
+
+<CodeGroup>
+  <CodeSnippet language="typescript" title="✅ Correct">
+    import { Component } from '@/components/ui/component'
+  </CodeSnippet>
+  
+  <CodeSnippet language="typescript" title="❌ Incorrect">
+    import { Component } from '../../components/ui/component'
+  </CodeSnippet>
+</CodeGroup>
+
+### Database Development
+
+**Supabase Client Usage:**
+
+<CodeGroup>
+  <CodeSnippet language="typescript" title="Client-side (components)">
+    {`import { createClient } from '@/lib/supabase-app'
+const supabase = createClient()`}
+  </CodeSnippet>
+  
+  <CodeSnippet language="typescript" title="Server-side (API routes)">
+    {`import { supabaseAdmin } from '@/lib/supabase'
+const result = await supabaseAdmin.from('table').select()`}
+  </CodeSnippet>
+</CodeGroup>
+
+**Database Functions:**
+
+<Callout type="info">
+All database operations are centralized in `src/features/database/supabase-functions.ts` (1734 lines)
+</Callout>
+
+<CodeSnippet language="typescript" title="Common patterns">
+{`import { getUser, getPlatform, updatePlatform } from '@/features/database'
+
+// Result types always include error handling
+interface DatabaseResult<T> {
+  data: T | null;
+  error: string | null;
+}`}
+</CodeSnippet>
+
+---
+
+## Testing and Quality
+
+### Type Checking
+
+<CodeSnippet language="bash">
+npm run typecheck
+</CodeSnippet>
+
+The project uses strict TypeScript with:
+- `strict: true`
+- `noEmit: true` (type checking only, no compilation)
+- Path aliases configured
+
+### Linting
+
+<CodeGroup>
+  <CodeSnippet language="bash" title="Check for issues">
+    npm run lint
+  </CodeSnippet>
+  
+  <CodeSnippet language="bash" title="Auto-fix issues">
+    npm run lint:fix
+  </CodeSnippet>
+</CodeGroup>
+
+**ESLint Configuration:** `eslint.config.mjs`
+
+### Formatting
+
+<CodeGroup>
+  <CodeSnippet language="bash" title="Biome (primary formatter)">
+    npm run format
+  </CodeSnippet>
+  
+  <CodeSnippet language="bash" title="Prettier (fallback)">
+    npm run format:fix
+  </CodeSnippet>
+</CodeGroup>
+
+**Configuration:** `biome.json`
+- Quote style: double
+- Indent: 2 spaces
+- Line width: 120
+- Organize imports: enabled
+
+### Bundle Analysis
+
+Analyze bundle size and dependencies:
+
+<CodeSnippet language="bash">
+npm run analyze
+</CodeSnippet>
+
+<Callout type="info">
+Uses `@next/bundle-analyzer` to generate interactive bundle reports.
+</Callout>
+
+---
+
+## Deployment
+
+### Docker Deployment
+
+**Dockerfile** is configured for production deployment:
+
+<CodeSnippet language="dockerfile" title="Dockerfile">
+{`FROM node:24-bookworm-slim
+WORKDIR /usr/src/app
+COPY . .
+RUN npm ci
+RUN npm run build
+USER node
+EXPOSE 3000
+CMD ["npm", "start"]`}
+</CodeSnippet>
+
+**Docker Compose:**
+
+<CodeSnippet language="bash">
+docker-compose up
+</CodeSnippet>
+
+### Vercel Deployment (Recommended)
+
+<Callout type="success">
+The project is optimized for Vercel deployment
+</Callout>
+
+1. **Connect Repository** to Vercel
+2. **Set Environment Variables** in Vercel dashboard
+3. **Configure Build Settings:**
+   - Framework: Next.js
+   - Build Command: `npm run build`
+   - Output Directory: `.next`
+   - Install Command: `npm ci`
+
+4. **Deploy:**
+   - Automatic deploys on push to configured branches
+   - Preview deployments for PRs
+
+### Environment Configuration
+
+**Production Environment Variables:**
+
+<CodeSnippet language="bash">
+{`NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+NEXT_PUBLIC_DEVSCRIBE_BACKEND_URL=`}
+</CodeSnippet>
+
+<Callout type="info">
+**Next.js Configuration:** `next.config.ts`
+- Image optimization for Unsplash
+- Content Collections integration
+- Server Actions allowed origins
+- ESLint disabled during builds (fix before enabling)
+</Callout>
+
+---
+
+## Troubleshooting
+
+### Common Issues
+
+| Issue | Solution |
+|-------|----------|
+| **Google/GitHub OAuth doesn't work** | Ensure `NEXT_PUBLIC_DEVSCRIBE_BACKEND_URL=http://127.0.0.1:8000` (not localhost) |
+| **Supabase connection errors** | Verify all three Supabase environment variables are set correctly |
+| **Build fails with module errors** | Run `npm ci` to install exact dependency versions |
+| **Type errors in CI** | Run `npm run typecheck` locally first |
+| **Lint errors blocking PR** | Run `npm run lint:fix` to auto-fix issues |
+| **Port 3000 already in use** | Kill the process: `lsof -ti:3000 \| xargs kill -9` |
+| **Content Collections errors** | Delete `.content-collections` directory and rebuild |
+
+### Development Server Issues
+
+**Clean start:**
+
+<CodeSnippet language="bash">
+npm run dev:clean
+</CodeSnippet>
+
+**Full cleanup:**
+
+<CodeSnippet language="bash">
+{`npm run clean  # Removes .next, .cache, .turbo, node_modules
+npm ci
+npm run dev`}
+</CodeSnippet>
+
+### Database Issues
+
+**Check Supabase connection:**
+
+<CodeSnippet language="typescript">
+{`import { supabase } from '@/lib/supabase'
+const { data, error } = await supabase.from('users').select('*').limit(1)
+console.log({ data, error })`}
+</CodeSnippet>
+
+<Callout type="warning">
+**Common Supabase errors:**
+- Invalid JWT → Check `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- Connection refused → Check `NEXT_PUBLIC_SUPABASE_URL`
+- Unauthorized → Check `SUPABASE_SERVICE_ROLE_KEY` for admin operations
+</Callout>
+
+### Build Issues
+
+**TypeScript errors:**
+
+<CodeSnippet language="bash">
+npm run typecheck 2>&1 | grep error
+</CodeSnippet>
+
+**Memory issues during build:**
+
+<CodeSnippet language="bash">
+NODE_OPTIONS=--max_old_space_size=4096 npm run build
+</CodeSnippet>
+
+---
+
+## Additional Resources
+
+### Key Configuration Files
+
+- **`package.json`** - Dependencies and scripts
+- **`tsconfig.json`** - TypeScript configuration with path aliases
+- **`next.config.ts`** - Next.js settings and plugins
+- **`tailwind.config.js`** - Tailwind CSS customization
+- **`biome.json`** - Code formatting rules
+- **`components.json`** - Shadcn UI component configuration
+- **`CLAUDE.md`** - Development principles and coding standards
+
+### Useful Commands Reference
+
+<CodeSnippet language="bash">
+{`# Development
+npm run dev              # Standard dev server
+npm run dev:turbo        # Faster dev server with Turbopack
+npm run dev:clean        # Clean restart
+
+# Building
+npm run build            # Production build
+npm run start            # Production server
+
+# Quality Checks
+npm run lint             # Check linting
+npm run lint:fix         # Fix linting
+npm run typecheck        # Type check
+npm run format           # Format with Biome
+npm run ci:check         # Full CI pipeline
+
+# Analysis
+npm run analyze          # Bundle analysis
+npm run clean            # Clean build artifacts`}
+</CodeSnippet>
+
+### Architecture Patterns
+
+<Callout type="tip">
+**Feature-Based Structure:**
+Each feature module typically contains:
+- `components/` - UI components
+- `actions/` - Server actions
+- `hooks/` - Custom hooks
+- `utils/` - Utility functions
+- `types/` or `types.ts` - TypeScript definitions
+</Callout>
+
+**Component Patterns:**
+- Use `"use client"` for client components
+- Server components by default
+- Context providers for state management
+- Custom hooks for reusable logic
+
+**Data Fetching:**
+- Server Actions for mutations
+-React Server Components for initial data
+- Client-side fetching with async/await
+
+---
+
+## Support and Contact
+
+For questions or issues:
+1. Check this guide first
+2. Review `CLAUDE.md` for coding standards
+3. Check existing issues in the repository
+4. Contact the team lead for architectural questions
+
+---
+
+**Document Version:** 1.0  
+**Last Updated:** 2026-02-19  
+**Target Audience:** Internal Development Team
