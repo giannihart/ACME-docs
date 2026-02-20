@@ -37,7 +37,7 @@
      {
           "tab": "Changelog",
           "external": true,
-          "url": "/changelog"
+          "href": "/changelog"
         }
     ],
 
