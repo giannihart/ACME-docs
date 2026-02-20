@@ -1,6 +1,7 @@
 {
   "name": "devscribe",
   "favicon": "/favicon.svg",
+
   "navigation": {
     "tabs": [
       {
@@ -50,15 +51,18 @@
         ]
       }
     ],
+
     "global": {
       "anchors": [
         {
           "anchor": "Talk to sales",
-          "href": "https://cal.com/giannihart/talk-to-sales"
+          "href": "https://cal.com/giannihart/talk-to-sales",
+          "icon": " "
         },
         {
           "anchor": "Home",
-          "href": "https://www.devscribeai.com/"
+          "href": "https://www.devscribeai.com/",
+          "icon": ""
         }
       ]
     }
