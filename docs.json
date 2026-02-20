@@ -7,11 +7,13 @@
         "tab": "Documentation",
         "groups": [
           {
-           "group": "Quickstart",
+            "group": "Quickstart",
             "pages": [
-            "quickstart/introduction",
+              "quickstart/introduction",
               "quickstart/dj-setup",
-              "quickstart/openapi",
+              "quickstart/openapi"
+            ]
+          }
         ]
       },
       {
@@ -26,17 +28,18 @@
           {
             "group": "Components",
             "pages": [
-            "components/headers",
+              "components/headers",
               "components/texttf",
               "components/lists",
               "components/steps",
               "components/links",
-              "components/imagevideo",
+              "components/imagevideo"
+            ]
           }
         ]
       },
       {
-      "tab": "Changelog",
+        "tab": "Changelog",
         "groups": [
           {
             "group": "Updates",
