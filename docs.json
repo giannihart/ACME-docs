@@ -34,11 +34,10 @@
           }
         ]
       },
-     {
-          "tab": "Changelog",
-          "external": true,
-          "href": "/changelog"
-        }
+    {
+        "tab": "Changelog",
+        "href": "/changelog"
+      }
     ],
 
     "buttons": [
