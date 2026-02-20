@@ -36,7 +36,12 @@
         ]
       },
       {
-        "tab": "Changelog",
+      "tab": "Changelog",
+        "groups": [
+          {
+            "group": "Updates",
+            "pages": [
+              "changelog"
             ]
           }
         ]
