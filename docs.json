@@ -1,7 +1,6 @@
 {
   "name": "devscribe",
   "favicon": "/favicon.svg",
-
   "navigation": {
     "tabs": [
       {
@@ -29,17 +28,16 @@
           {
             "group": "Components",
             "pages": [
-              "headers",
+              "headers"
             ]
           }
         ]
       },
-    {
+      {
         "tab": "Changelog",
         "href": "/changelog"
       }
     ],
-
     "buttons": [
       {
         "label": "Talk to sales",
