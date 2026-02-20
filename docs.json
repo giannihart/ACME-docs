@@ -10,9 +10,9 @@
           {
             "group": "Quickstart",
             "pages": [
-              "quickstart/introduction",
-              "quickstart/dj-setup",
-              "quickstart/openapi"
+              "quickstart/introduction.mdx",
+              "quickstart/dj-setup.mdx",
+              "quickstart/openapi.mdx"
             ]
           }
         ]
@@ -23,18 +23,18 @@
           {
             "group": "Get Started",
             "pages": [
-              "getstarted/overview"
+              "getstarted/overview.mdx"
             ]
           },
           {
             "group": "Components",
             "pages": [
-              "components/headers",
-              "components/texttf",
-              "components/lists",
-              "components/steps",
-              "components/links",
-              "components/imagevideo"
+              "components/headers.mdx",
+              "components/texttf.mdx",
+              "components/lists.mdx",
+              "components/steps.mdx",
+              "components/links.mdx",
+              "components/imagevideo.mdx"
             ]
           }
         ]
