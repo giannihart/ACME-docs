@@ -9,7 +9,7 @@
           {
            "group": "Quickstart",
             "pages": [
-            "quickstart/Introduction",
+            "quickstart/introduction",
               "quickstart/dj-setup",
               "quickstart/openapi",
         ]
