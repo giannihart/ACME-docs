@@ -1,0 +1,252 @@
+---
+title: Media
+icon: file-text
+---
+## Overview of images and videos
+
+### Images
+
+Images in your documentation are added using standard Markdown syntax. All image files must be stored in the `/public` directory of your project.
+
+#### Basic Image Syntax
+
+![Devscribe logo](/devscribe-logo.png)
+
+<CodeSnippet language="markdown" title="Syntax">
+![Alt text](/image-filename.png)
+</CodeSnippet>
+
+#### Image with Title
+
+Add a title attribute for additional context on hover:
+
+![Devscribe logo](/devscribe-logo.png "Devscribe Logo")
+
+<CodeSnippet language="markdown" title="With Title">
+![Alt text](/image-filename.png "Title text")
+</CodeSnippet>
+
+#### Adding Images to Your Project
+
+**Step 1: Place image in public directory**
+
+Store your image file in the `/public` folder at the root of your project:
+
+<CodeSnippet language="text">
+{`/public
+  ├── your-image.png
+  ├── screenshots/
+  │   └── feature-screenshot.png
+  └── logos/
+      └── company-logo.svg`}
+</CodeSnippet>
+
+**Step 2: Reference image in markdown**
+
+Use the file path relative to the public directory, starting with `/`:
+
+<CodeSnippet language="markdown">
+{`![Feature screenshot](/screenshots/feature-screenshot.png)
+![Company logo](/logos/company-logo.svg)`}
+</CodeSnippet>
+
+<Callout type="info">
+The `/public` directory is the root for all static assets. When referencing images, always start paths with `/` to indicate they're in the public directory.
+</Callout>
+
+#### Remote Images
+
+Remote images from external URLs require whitelisting in your Next.js configuration:
+
+<CodeSnippet language="typescript" title="next.config.ts" showLineNumbers={true}>
+{`const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+    ],
+  },
+};`}
+</CodeSnippet>
+
+After configuration, referenceexternal images directly:
+
+<CodeSnippet language="markdown">
+![External image](https://images.unsplash.com/photo-example.jpg)
+</CodeSnippet>
+
+<Callout type="warning">
+Only add trusted domains to your remote patterns. Each external domain must be explicitly whitelisted for security.
+</Callout>
+
+#### Supported Image Formats
+
+The following image formats are supported:
+
+- **PNG** - `.png`
+- **JPG/JPEG** - `.jpg`, `.jpeg`
+- **SVG** - `.svg`
+- **GIF** - `.gif`
+- **WebP** - `.webp`
+
+#### Image Best Practices
+
+<Callout type="tip">
+**File Size:** Optimize images before uploading. Keep file sizes under 500KB when possible for faster page loads.
+
+**Alt Text:** Always include descriptive alt text for accessibility and SEO. Describe what the image shows.
+
+**File Names:** Use lowercase, hyphenated filenames: `my-screenshot.png` instead of `My Screenshot.png`.
+
+**Organization:** Create subdirectories in `/public` to organize images by category or page.
+</Callout>
+
+### Videos
+
+<Callout type="warning">
+Native video component support is not yet available. Use one of the workarounds below to include videos in your documentation.
+</Callout>
+
+#### Video Workaround Options
+
+**Option 1: Embedded Video Players**
+
+Use embedded video players from hosting platforms like YouTube, Vimeo, or Loom.
+
+<CodeGroup>
+  <CodeSnippet language="html" title="YouTube">
+    {`<iframe width="560" height="315" 
+  src="https://www.youtube.com/embed/VIDEO_ID" 
+  frameborder="0" 
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+  allowfullscreen>
+</iframe>`}
+  </CodeSnippet>
+  
+  <CodeSnippet language="html" title="Vimeo">
+    {`<iframe src="https://player.vimeo.com/video/VIDEO_ID" 
+  width="640" height="360" 
+  frameborder="0" 
+  allow="autoplay; fullscreen; picture-in-picture" 
+  allowfullscreen>
+</iframe>`}
+  </CodeSnippet>
+</CodeGroup>
+
+**Option 2: GIF Animations**
+
+Convert short video clips to GIF format and include them as images:
+
+<CodeSnippet language="markdown">
+![Demo walkthrough](/demos/feature-demo.gif)
+</CodeSnippet>
+
+<Callout type="info">
+This approach works well for short demonstrations (under 10 seconds).
+</Callout>
+
+**Option 3: Video Links**
+
+Link to videos hosted externally:
+
+<CodeSnippet language="markdown">
+[Watch the tutorial video](https://youtu.be/example-video)
+</CodeSnippet>
+
+### Upcoming Features
+
+<Callout type="tip">
+The following features are planned for future releases:
+- **Drag-and-drop asset upload** - Upload images directly from the web editor by dragging files into the file tree
+- **Native video component** - Dedicated component for self-hosted videos
+- **Image optimization** - Automatic image compression and responsive sizing
+- **Card image support** - Display images directly in Card components
+</Callout>
+
+### Troubleshooting
+
+**Image not displaying**
+
+Check these common issues:
+
+- Verify the image file exists in `/public`
+- Ensure the path starts with `/` (e.g., `/image.png` not `image.png`)
+- Check for typos in the filename (remember: filenames are case-sensitive)
+- Confirm the file extension matches the actual file type
+
+Correct path structure:
+
+<CodeSnippet language="text">
+/public/screenshots/demo.png → ![Demo](/screenshots/demo.png)
+</CodeSnippet>
+
+**Remote image blocked**
+
+If a remote image isn't loading, add its domain to `next.config.ts`:
+
+<CodeSnippet language="typescript" title="next.config.ts">
+{`const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'your-image-domain.com',
+      },
+    ],
+  },
+};`}
+</CodeSnippet>
+
+<Callout type="warning">
+After configuration changes, restart your development server.
+</Callout>
+
+**Image appears too large**
+
+Standard Markdown images display at their native size. To control image dimensions, use HTML:
+
+<CodeGroup>
+  <CodeSnippet language="html" title="Width Control">
+    <img src="/large-image.png" alt="Description" width="600" />
+  </CodeSnippet>
+  
+  <CodeSnippet language="html" title="Responsive">
+    <img src="/large-image.png" alt="Description" style="max-width: 100%; height: auto;" />
+  </CodeSnippet>
+</CodeGroup>
+
+### Examples
+
+#### Documentation with Screenshots
+
+**Step 1: Navigate to Settings**
+
+Open your project dashboard and click the Settings icon in the sidebar.
+
+![Settings menu location](/screenshots/settings-menu.png "Location of settings menu")
+
+**Step 2: Configure API Keys**
+
+In the API section, click "Generate New Key" to create an API key.
+
+![API key generation](/screenshots/api-keys.png)
+
+**Step 3: Copy and Save**
+
+Copy your API key and store it securely. You won't be able to view it again.
+
+<Callout type="danger">
+Never commit API keys to version control or share them publicly.
+</Callout>
+
+#### Feature Showcase with Images
+
+View all your projects and metrics at a glance.
+
+![Dashboard screenshot](/features/dashboard.png)
+
+Work together with your team in real-time.
+
+![Collaboration feature](/features/collaboration.png)

@@ -1,0 +1,164 @@
+---
+title: Steps
+icon: book
+---
+## Overview
+
+Steps display numbered, sequential instructions that guide users through procedures. Use them for tutorials, setup guides, and multi-step processes.
+
+### Basic Usage
+
+Wrap individual components inside a container. Step numbering is automatic.
+
+<TabGroup>
+  <Tab title="Preview">
+  <Steps>
+    <Step title="Install Dependencies">
+  <CodeSnippet language="bash">
+      npm install @markdoc/markdoc react
+      </CodeSnippet>
+    </Step>
+    <Step title="Create Configuration">
+  <CodeSnippet language="javascript" title="markdoc.config.js">
+      {`export default { nodes: {}, tags: {} }`}
+      </CodeSnippet>
+    </Step>
+    <Step title="Build Your First Document">
+  <CodeSnippet language="markdown" title="example.mdx">
+      {`# Welcome to Markdoc
+    <Callout type="info">Hello from Markdoc!</Callout>`}
+      </CodeSnippet>
+    </Step>
+  </Steps>
+  </Tab>
+  <Tab title="Syntax">
+  ```markdown
+    <Steps>
+      <Step title="Install Dependencies">
+      \`\`\`bash
+      npm install @markdoc/markdoc react
+      \`\`\`
+      </Step>
+
+      <Step title="Create Configuration">
+      <CodeSnippet language="javascript" title="markdoc.config.js">
+      {\`export default { nodes: {}, tags: {} }\
+  ```
+
+  </Step>
+
+  </Steps>`}
+
+  </CodeSnippet>
+  </Tab>
+</TabGroup>
+
+### Rich Content Support
+
+Steps can contain any MDX components including code blocks, callouts, lists, and paragraphs.
+
+<TabGroup>
+  <Tab title="Preview">
+  <Steps>
+    <Step title="Database Setup">
+  Configure your database connection and schema.
+
+      <CodeSnippet language="sql" title="schema.sql" showLineNumbers={true}>
+      {`CREATE TABLE documents (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      tag VARCHAR(100),
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );`}
+      </CodeSnippet>
+
+      <Callout type="warning">
+      Make sure to backup your database before running schema changes.
+      </Callout>
+    </Step>
+    <Step title="API Implementation">
+  Build the API endpoints.
+
+      <CodeSnippet language="javascript" title="api/documents.js" highlight="5-7,12-14">
+      {`import express from 'express'
+    const router = express.Router()
+
+    router.get('/documents', async (req, res) => {
+      const documents = await db.query('SELECT * FROM documents')
+      res.json(documents)
+    })
+
+    router.post('/documents', async (req, res) => {
+      const { name, tag } = req.body
+      const result = await db.query('INSERT INTO documents(name, tag) VALUES($1,$2) RETURNING *', [name, tag])
+      res.status(201).json(result.rows[0])
+    })
+
+    export default router`}
+      </CodeSnippet>
+
+      <Callout type="tip">
+      Return precise status codes and validate inputs.
+      </Callout>
+
+      The endpoints above demonstrate basic read and create operations.
+    </Step>
+    <Step title="Testing & Deployment">
+  Write tests and deploy your application.
+
+      <CodeSnippet language="bash" title="ci.yml">
+      {`npm run test && npm run build && npm run deploy`}
+      </CodeSnippet>
+    </Step>
+  </Steps>
+  </Tab>
+  <Tab title="Syntax">
+  ```markdown
+    <Steps>
+      <Step title="Database Setup">
+      Configure your database connection and schema.
+
+      <CodeSnippet language="sql" title="schema.sql" showLineNumbers={true}>
+      {\`CREATE TABLE documents (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      tag VARCHAR(100),
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );\
+  ```
+
+  <Callout type="warning">
+  Make sure to backup your database before running schema changes.
+  </Callout>
+
+  </Step>
+
+  </Steps>`}
+
+  </CodeSnippet>
+  </Tab>
+</TabGroup>
+
+### Component API
+
+**Steps Container**
+
+| Prop | Type | Required | Description | |------|------|----------|-------------| | `children` | `React.ReactNode` | Yes | Child `<Step>` components | | `className` | `string` | No | Custom CSS classes |
+
+**Step Component**
+
+| Prop | Type | Required | Description | |------|------|----------|-------------| | `title` | `string` | No | Step heading | | `children` | `React.ReactNode` | Yes | Step content | | `className` | `string` | No | Custom CSS classes |
+
+<Callout type="info">
+Step numbers and connecting lines are generated automatically. The final step omits the connecting line.
+</Callout>
+
+### Best Practices
+
+<Callout type="tip">
+- **Use descriptive titles**: Each step title should clearly indicate the action to perform
+- **Keep steps focused**: Each step should represent a single, complete action
+- **Add context**: Use callouts and explanatory text to provide additional context when needed
+- **Include code examples**: Demonstrate commands and configurations with code blocks
+- **Combine with other components**: Use CodeSnippet, Callout, and other MDX components to enhance clarity
+</Callout>

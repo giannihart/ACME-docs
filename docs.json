@@ -1,24 +1,46 @@
 {
-    "name": "devscribe",
-    "favicon": "/favicon.svg",
-    "navigation": {
-      "tabs": [
-        {
-          "tab": "Guides",
-          "groups": [
-            {
-              "group": "Get Started",
-              "pages": [
-                "introduction"
-              ]
-            },
-            {
-              "group": "Quickstart",
-              "pages": [
-                "quickstart/User Guide",
-                "quickstart/Docs.json Setup",
-                "quickstart/Openapi-json Setup"
-              ]
-            }
-          ]
-        },
+  "name": "devscribe",
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+           "group": "Quickstart",
+            "pages": [
+            "quickstart/Introduction",
+              "quickstart/dj-setup",
+              "quickstart/openapi",
+        ]
+      },
+      {
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "getstarted/overview"
+            ]
+          },
+          {
+            "group": "Components",
+            "pages": [
+            "components/headers",
+              "components/texttf",
+              "components/lists",
+              "components/steps",
+              "components/links",
+              "components/imagevideo",
+          }
+        ]
+      },
+      {
+        "tab": "Changelog",
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

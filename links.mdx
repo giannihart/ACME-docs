@@ -1,0 +1,205 @@
+---
+title: Links
+description: Basic overview on how to add/use links
+icon: book
+---
+
+## Overview
+
+Use standard markdown syntax to add links to your documentation:
+
+<CodeSnippet language="markdown" title="Basic Link Syntax">
+[Link text](https://example.com)
+</CodeSnippet>
+
+**Example:**
+
+<CodeSnippet language="markdown">
+[DevScribe](https://devscribe.com)
+</CodeSnippet>
+
+### Links with Titles
+
+Add a title attribute that displays on hover:
+
+<CodeSnippet language="markdown" title="Link with Hover Text">
+[Link text](https://example.com "Hover text")
+</CodeSnippet>
+
+**Example:**
+
+<CodeSnippet language="markdown">
+[DevScribe documentation](https://devscribe.com "Visit our docs")
+</CodeSnippet>
+
+## Internal Links
+
+Link to other pages within your documentation using relative paths starting with `/`:
+
+<CodeSnippet language="markdown" title="Internal Link Syntax">
+[Page name](/path-to-page)
+</CodeSnippet>
+
+**Example:**
+
+<CodeSnippet language="markdown">
+{`[Quickstart Guide](/quickstart)
+[API Reference](/api-reference/introduction)
+[Account Settings](/settings/api)`}
+</CodeSnippet>
+
+<Callout type="info">
+Internal links navigate within your documentation site without a full page reload.
+</Callout>
+
+## External Links
+
+Link to external websites using full URLs:
+
+<CodeSnippet language="markdown" title="External Link Syntax">
+[External site](https://example.com)
+</CodeSnippet>
+
+<Callout type="tip">
+External links open in the same tab by default. To open in a new tab, use a Card component instead (see below).
+</Callout>
+
+## Clickable Cards
+
+For prominent links with icons and descriptions, use the Card component with an `href` prop:
+
+### External Link Card
+
+<CodeSnippet language="jsx" title="External Link Card Example">
+{`<Card 
+  title="API Documentation" 
+  description="Complete API reference" 
+  icon="book" 
+  href="https://api.example.com"
+>
+  Explore our comprehensive API documentation with examples and tutorials.
+</Card>`}
+</CodeSnippet>
+
+<Callout type="success">
+External card links automatically open in a new tab with `target="_blank"`.
+</Callout>
+
+### Internal Link Card
+
+<CodeSnippet language="jsx" title="Internal Link Card Example">
+{`<Card 
+  title="Quickstart Guide" 
+  description="Get started in minutes" 
+  icon="rocket" 
+  href="/quickstart"
+>
+  Follow our step-by-step guide to set up your first project.
+</Card>`}
+</CodeSnippet>
+
+<Callout type="info">
+Internal card links use relative paths starting with `/`.
+</Callout>
+
+### Card Groups with Links
+
+Create multiple linked cards in a grid layout:
+
+<CodeSnippet language="jsx" title="Card Group with Multiple Links">
+{`<CardGroup cols={2} gap="md">
+  <Card 
+    title="Getting Started" 
+    description="Setup guide" 
+    icon="play" 
+    href="/introduction"
+  >
+    Start here to learn the basics.
+  </Card>
+
+  <Card 
+    title="API Reference" 
+    description="Technical documentation" 
+    icon="code" 
+    href="/api-reference/introduction"
+  >
+    Browse our complete API documentation.
+  </Card>
+
+  <Card 
+    title="GitHub Repository" 
+    description="View source code" 
+    icon="github" 
+    href="https://github.com/example/repo"
+  >
+    Contribute to our open-source project.
+  </Card>
+
+  <Card 
+    title="Community" 
+    description="Join discussions" 
+    icon="users" 
+    href="https://discord.gg/example"
+  >
+    Connect with other developers.
+  </Card>
+</CardGroup>`}
+</CodeSnippet>
+
+## Link Best Practices
+
+### Descriptive Link Text
+
+Use clear, descriptive text that indicates the link destination:
+
+<Callout type="success">
+**Good:**
+
+<CodeSnippet language="markdown">
+{`[View our API documentation](/api-reference)
+[Join our Slack community](https://slack.example.com)`}
+</CodeSnippet>
+</Callout>
+
+<Callout type="warning">
+**Avoid:**
+
+<CodeSnippet language="markdown">
+{`[Click here](/api-reference)
+[Learn more](https://slack.example.com)`}
+</CodeSnippet>
+</Callout>
+
+### Internal vs External
+
+- **Internal links**: Use relative paths starting with `/` for documentation pages
+- **External links**: Use full URLs for external websites and resources
+
+### When to Use Cards vs Text Links
+
+<Callout type="tip">
+- **Text links**: Use for inline references within paragraphs
+- **Card links**: Use for featured navigation, major sections, or external resources requiring prominence
+</Callout>
+
+## Available Icons
+
+Cards support icons from the Lucide React library. Common icons include:
+
+- `book` - Documentation
+- `rocket` - Getting started
+- `code` - API/Code
+- `github` - GitHub links
+- `external-link` - External resources
+- `file-text` - Articles/Guides
+- `settings` - Configuration
+- `users` - Community
+- `help-circle` - Support
+
+Specify icons using the `icon` prop:
+
+<CodeSnippet language="jsx" title="Card with Icon">
+{`<Card title="Example" description="Card description" icon="rocket" href="/path">
+  Card content
+</Card>`}
+</CodeSnippet>

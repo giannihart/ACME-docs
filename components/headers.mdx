@@ -1,0 +1,164 @@
+---
+title: Headers
+icon: book
+---
+## Overview
+
+Headers structure your documentation and automatically generate the table of contents. Use standard Markdown heading syntax with 1-6 hash symbols.
+
+### Basic Syntax
+
+<CodeSnippet language="markdown" title="Basic Header Syntax">
+{`## Main Section
+### Subsection
+#### Detail Level`}
+</CodeSnippet>
+
+<Callout type="info">
+Headers automatically generate anchor IDs for linking, appear in the right sidebar TOC (h1 and h2 only), include hover links for easy sharing, and enable smooth scrolling navigation.
+</Callout>
+
+### Header Hierarchy
+
+Use semantic heading levels:
+
+<CodeSnippet language="markdown" title="Proper Header Hierarchy">
+{`## Overview
+Content about the overview...
+
+### Prerequisites
+List prerequisites here...
+
+### Installation
+Installation steps...
+
+## Configuration
+Configuration details...
+
+### Basic Setup
+Basic configuration...
+
+### Advanced Options
+Advanced configuration...`}
+</CodeSnippet>
+
+<Callout type="warning">
+Don't skip levels (e.g., h2 → h4). Follow sequential order for proper document structure.
+</Callout>
+
+### Header IDs
+
+IDs are auto-generated from header text:
+
+<CodeSnippet language="markdown" title="Auto-Generated IDs">
+{`## Getting Started
+<!-- ID: getting-started -->
+
+## API Authentication
+<!-- ID: api-authentication -->
+
+## Using Code Snippets
+<!-- ID: using-code-snippets -->`}
+</CodeSnippet>
+
+<Callout type="tip">
+Duplicate headers get numbered suffixes: `getting-started-2`, `getting-started-3`.
+</Callout>
+
+### Linking to Headers
+
+Reference headers using anchor links:
+
+<CodeSnippet language="markdown" title="Internal Links">
+{`See the [Configuration](#configuration) section for details.
+
+Jump to [Advanced Options](#advanced-options) below.`}
+</CodeSnippet>
+
+External page headers:
+
+<CodeSnippet language="markdown" title="External Links">
+{`Review our [Authentication guide](/api-reference/introduction#authentication).`}
+</CodeSnippet>
+
+### Table of Contents
+
+<Callout type="info">
+Only h1 and h2 headers appear in the right sidebar TOC. Use h3-h6 for internal section structure that won't clutter navigation.
+</Callout>
+
+**Recommended structure:**
+
+<CodeSnippet language="markdown" title="TOC Structure">
+{`## Major Topic (shows in TOC)
+Introduction to the major topic...
+
+### Implementation (doesn't show in TOC)
+Implementation details...
+
+#### Step 1 (doesn't show in TOC)
+Detailed step information...
+
+## Next Major Topic (shows in TOC)
+Next section content...`}
+</CodeSnippet>
+
+### Best Practices
+
+**Keep headers concise and descriptive:**
+
+**Use parallel structure:**
+
+<CodeSnippet language="markdown" title="Parallel Structure">
+{`## Creating Documents
+## Updating Documents
+## Deleting Documents`}
+</CodeSnippet>
+
+**Avoid special characters** that complicate IDs:
+
+### With MDX Components
+
+Headers work alongside documentation components:
+
+<CodeSnippet language="markdown" title="Headers with Components">
+{`## Quick Start
+
+<Callout type="info">
+Complete the prerequisites before continuing.
+</Callout>
+
+### Step 1: Install Dependencies
+
+<CodeSnippet language="bash">
+{\`npm install devscribe\`}
+</CodeSnippet>
+
+### Configure
+
+<Steps>
+</Steps>
+
+Create config file
+
+### Frontmatter Integration
+
+Headers work with YAML frontmatter at file top:
+
+<CodeSnippet language="markdown" title="Frontmatter Example">
+{`---
+title: "Authentication Guide"
+description: "Learn how to authenticate API requests"
+icon: "key"
+---
+
+## Overview
+Authentication protects your API endpoints...
+
+## API Keys
+Generate API keys in your dashboard...`}
+</CodeSnippet>
+
+<Callout type="tip">
+The `title` field sets the page title and primary h1, so start document headers at h2 level.
+</Callout>

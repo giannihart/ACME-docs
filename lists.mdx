@@ -1,0 +1,128 @@
+---
+title: Lists
+icon: book
+---
+## Overview
+
+Lists organize information into readable bullet points or numbered sequences.
+
+### Basic List Types
+
+#### Unordered Lists
+
+Create unordered lists using `-`, `*`, or `+` followed by a space:
+
+```markdown
+- First item
+- Second item
+- Third item
+```
+
+#### Ordered Lists
+
+Create ordered lists using numbers followed by periods:
+
+```markdown
+1. First step
+2. Second step
+3. Third step
+```
+
+<Callout type="tip">
+The actual numbers you write don't matter—Markdown automatically renumbers them sequentially.
+</Callout>
+
+### Nested Lists
+
+Indent list items with two spaces to create nested lists:
+
+<TabGroup>
+  <Tab title="Preview">
+  - Parent item
+      - Nested child item
+      - Another nested item
+        - Deeply nested item
+    - Another parent item
+  </Tab>
+  <Tab title="Syntax">
+  ```markdown
+  - Parent item
+    - Nested child item
+    - Another nested item
+      - Deeply nested item
+  - Another parent item
+  ```
+  </Tab>
+</TabGroup>
+
+### Mixed Nesting
+
+Combine ordered and unordered lists:
+
+<TabGroup>
+  <Tab title="Preview">
+  1. Configure your environment
+
+  - Install Node.js
+  - Install dependencies
+
+  1. Run the development server
+
+  - Use `npm run dev`
+  - Open browser to `localhost:3000`
+
+  1. Build for production
+  </Tab>
+  <Tab title="Syntax">
+  ```markdown
+  1. Configure your environment
+     - Install Node.js
+     - Install dependencies
+  2. Run the development server
+     - Use \`npm run dev\`
+     - Open browser to \`localhost:3000\`
+  3. Build for production
+  ```
+  </Tab>
+</TabGroup>
+
+### Custom List Components
+
+<Callout type="tip">
+Most of the time, standard Markdown list syntax is simpler and more readable. Use custom components only when you need programmatic control or dynamic list generation.
+</Callout>
+
+### List Styling
+
+Lists are automatically styled with:
+
+- Consistent spacing between items
+- Proper indentation for nested lists
+- Matching colors with your theme
+- Responsive margins and padding
+
+### Best Practices
+
+<Callout type="info">
+**Use unordered lists when:**
+- Order doesn't matter
+- Listing features or options
+- Creating navigation menus
+
+**Use ordered lists when:**
+- Describing sequential steps
+- Showing rankings or priorities
+- Order has semantic meaning
+</Callout>
+
+<Callout type="tip">
+**Keep lists concise:**
+- 3-7 items per list is ideal
+- Use nested lists for subcategories
+- Break long lists into sections with headings
+
+**Format consistently:**
+- Start each item with a capital letter
+- End with periods only if items are complete sentences
+- Keep parallel structure across items
+</Callout>
