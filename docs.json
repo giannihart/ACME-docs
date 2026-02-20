@@ -40,19 +40,27 @@
       },
       {
         "tab": "Changelog",
+        "groups": [
+          {
+            "group": "Updates",
+            "pages": [
+              "changelog"
+            ]
+          }
         ]
-        ]
-        {
-  "navigation": {
+      }
+    ],
     "global": {
       "anchors": [
-        { "anchor": "Talk to sales", "href": "https://cal.com/giannihart/talk-to-sales"},
-        { "anchor": "Home", "href": "https://www.devscribeai.com/",}
+        {
+          "anchor": "Talk to sales",
+          "href": "https://cal.com/giannihart/talk-to-sales"
+        },
+        {
+          "anchor": "Home",
+          "href": "https://www.devscribeai.com/"
+        }
       ]
     }
-  }
-}
-      }
-    ]
   }
 }
