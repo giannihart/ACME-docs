@@ -23,26 +23,22 @@
           {
             "group": "Get Started",
             "pages": [
-              "overview."
+              "overview"
             ]
           },
           {
             "group": "Components",
             "pages": [
               "headers",
-              "texttf",
-              "lists",
-              "steps",
-              "links",
-              "imagevideo"
             ]
           }
         ]
       },
-      {
-        "tab": "Changelog",
-        "href": "/changelog"
-      }
+     {
+          "tab": "Changelog",
+          "external": true,
+          "url": "/changelog"
+        }
     ],
 
     "buttons": [

@@ -1,0 +1,201 @@
+---
+title: Headers
+icon: book
+---
+## Overview
+
+Headers structure your documentation with six hierarchy levels. They automatically generate anchor IDs for linking and feature built-in scroll behavior.
+
+<TabGroup>
+  <Tab title="Preview">
+  # H1 - Main Title
+
+  ## H2 - Section Header
+
+  ### H3 - Subsection Header
+
+  #### H4 - Minor Section
+
+  ##### H5 - Detail Header
+
+  ###### H6 - Smallest Header
+  </Tab>
+  <Tab title="Syntax">
+  ```markdown
+    # H1 - Main Title
+    ## H2 - Section Header
+    ### H3 - Subsection Header
+    #### H4 - Minor Section
+    ##### H5 - Detail Header
+    ###### H6 - Smallest Header
+  ```
+  </Tab>
+</TabGroup>
+
+## Key Features
+
+<Card title="Card Title">
+<Card title="Automatic Anchor IDs" description="Link directly to sections" icon="link">
+  Headers generate slugified IDs from their text. For example, "Getting Started" becomes `getting-started`, enabling direct links to specific sections.
+</Card>
+
+<Card title="Theme Support" description="Adapts to light and dark modes" icon="palette">
+Headers use theme-aware colors that automatically adjust between light and dark modes for optimal readability.
+</Card>
+
+<Card title="Scroll Behavior" description="Smart positioning" icon="arrow-down">
+Headers include scroll margin to prevent content from hiding behind fixed navigation bars when navigating via anchor links.
+</Card>
+
+<Card title="Hierarchy" description="Six semantic levels" icon="layers">
+Use H1 for page titles, H2 for major sections, and H3-H6 for nested subsections to create clear document structure.
+</Card>
+
+</CardGroup>
+
+## Header Styling
+
+Headers use responsive sizing with consistent spacing:
+
+<TabGroup>
+  <Tab title="Preview">
+  <Expand title="Size Comparison" defaultOpen={true}>
+  # H1 (text-3xl)
+    The largest header, typically used once per page for themain title.
+
+    ## H2 (text-2xl)
+    Primary section headers that divide major topics.
+
+    ### H3 (text-xl)
+    Subsection headers for organizing content within sections.
+
+    #### H4 (text-lg)
+    Minor sections or detailed breakdowns.
+
+    ##### H5 (text-base)
+    Smaller headers for granular organization.
+
+    ###### H6 (text-sm)
+    The smallest header for fine-grained content structure.
+  </Expand>
+  </Tab>
+  <Tab title="Specifications">
+  ```markdown
+  H1: text-3xl font-semibold (30px equivalent)
+  H2: text-2xl font-semibold (24px equivalent)
+  H3: text-xl font-semibold (20px equivalent)
+  H4: text-lg font-semibold (18px equivalent)
+  H5: text-base font-semibold (16px equivalent)
+  H6: text-sm font-semibold (14px equivalent)
+  ```
+  </Tab>
+</TabGroup>
+
+## Usage Examples
+
+### Document Structure
+
+<TabGroup>
+  <Tab title="Preview">
+  ## API Overview
+
+  This section introduces the API fundamentals.
+
+  ### Authentication
+
+  Learn how to authenticate requests.
+
+  #### Bearer Tokens
+
+  Use bearer tokens in the Authorization header.
+
+  ### Rate Limiting
+
+  Understand rate limits and quotas.
+  </Tab>
+  <Tab title="Syntax">
+  ```markdown
+    ## API Overview
+    This section introduces the API fundamentals.
+
+    ### Authentication
+    Learn how to authenticate requests.
+
+    #### Bearer Tokens
+    Use bearer tokens in the Authorization header.
+
+    ### Rate Limiting
+    Understand rate limits and quotas.
+  ```
+  </Tab>
+</TabGroup>
+
+### Headers in Components
+
+Headers work seamlessly inside other components like Cards and Callouts:
+
+<TabGroup>
+  <Tab title="Preview">
+  <Card title="Configuration Guide" icon="settings">
+  ### Setup Steps
+
+    Follow these steps to configure your environment.
+
+    #### Environment Variables
+    Create a `.env` file with your credentials.
+  </Card>
+
+  <Callout type="info">
+  ### Important Note
+
+    Headers inside callouts inherit the callout's color scheme instead of the default header color.
+  </Callout>
+  </Tab>
+  <Tab title="Syntax">
+  ````markdown
+    <Card title="Configuration Guide" icon="settings">
+
+    ### Setup Steps
+
+    Follow these steps to configure your environment.
+
+    #### Environment Variables
+    Create a `.env` file with your credentials.
+
+    </Card>
+
+    <Callout type="info">
+
+    ### Important Note
+
+    Headers inside callouts inherit the callout's color scheme instead of the default header color.
+
+    </Callout>
+  ```
+  </Tab>
+</TabGroup>
+
+## Best Practices
+
+<Callout type="tip">
+Use headers hierarchically—don't skip levels. Follow H1 with H2, not H3.
+</Callout>
+
+<Callout type="warning">
+Avoid using multiple H1 headers on a single page. Use one H1 for the main title, then H2 and below for sections.
+</Callout>
+
+<Steps>
+  <Step title="Start with H1">
+Use a single H1 at the top of each page for the main title.
+  </Step>
+  <Step title="Organize with H2">
+Divide content into major sections using H2 headers.
+  </Step>
+  <Step title="Subdivide with H3-H6">
+Break down sections further using progressively smaller headers as needed.
+  </Step>
+  <Step title="Keep text concise">
+Write clear, scannable header text that describes the content below.
+  </Step>
+</Steps>
