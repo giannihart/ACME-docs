@@ -147,13 +147,25 @@ The page integrates with three backend endpoints:
   Fetches all detected changes  
   *(called on page load at src/app/(dashboard)/updates/page.tsx:196)*
 
-- `POST /updates-regenerate`  
-  Regenerates documentation for updated/deleted items  
+- `POST /updates-regenerate`
+  Regenerates documentation for updated/deleted items
   *(src/app/(dashboard)/updates/page.tsx:263)*
 
-- `POST /generate-docs`  
-  Generates documentation for new code additions  
+- `POST /generate-docs`
+  Generates documentation for new code additions
   *(src/app/(dashboard)/updates/page.tsx:255)*
+
+- `POST /save-updated-doc`
+  Saves updated documentation to the system
+  *(called when Save button is clicked)*
+
+- `POST /delete-update-file`
+  Deletes an update file from pending list
+  *(called when trash icon is clicked on update card)*
+
+- `POST /get-num-updates`
+  Retrieves count of pending updates for the dashboard counter button
+  *(called on dashboard component mount)*
 
 ### Data Structure
 
